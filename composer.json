@@ -1,0 +1,15 @@
+{
+    "require-dev": {
+        "phpunit/phpunit": "^9.5"
+    },
+    "scripts": {
+        "test": "phpunit tests.php",
+        "tests": "phpunit --bootstrap src.php tests.php ",
+        "test1": "phpunit --bootstrap src.php tests.php --filter testSingleForwardCommandHeadingSouthFromSouthPole"
+    },
+    "autoload": {
+        "psr-4": {
+            "MarsRover\\": "./"
+        }
+    }
+}
