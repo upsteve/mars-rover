@@ -68,11 +68,16 @@ class Invoker
         }
     }
 
-    function processCommandCodes(string $commandCodes): void
+    function processCommandCodes(string $commandCodes): bool
     {
         $commands = array_map([$this, 'toCommand'], str_split($commandCodes));
         foreach($commands as $command) {
-            $command->execute();
+            try {
+                $command->execute();
+            } catch (\Exception) {
+                return false;
+            }
         }
+        return true;
     }
 }

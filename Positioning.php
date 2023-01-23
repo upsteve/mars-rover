@@ -6,21 +6,29 @@ class Positioning
 {
     private Position $position;
     private Vector $vector;
+    private Globe $globe;
+    private Position $lastObstacle;
 
-    function __construct(Position $position, Vector $vector)
+    function __construct(Position $position, Vector $vector, Globe $globe)
     {
         $this->position = $position;
         $this->vector = $vector;
+        $this->globe = $globe;
     }
 
     private function move(Vector $vector): void
     {
         $position = $this->position->normaliseToVector()->add($vector);
-        if ($position->hasCrossedPole()) {
-            $position = $position->inverseX();
-            $this->vector = $this->vector->inverseY();
+        $isPolarCrossing = $position->hasCrossedPole();
+        if ($isPolarCrossing) $position = $position->inverseX();
+        $newPosition = $position->denormaliseToPosition();
+
+        if ($this->globe->isCrater($newPosition)) {
+            $this->lastObstacle = $newPosition;
+            throw new \Exception("Rover could not complete command due to a crater in it's way!");
         }
-        $this->position = $position->denormaliseToPosition();
+        $this->position = $newPosition;
+        if ($isPolarCrossing) $this->vector = $this->vector->inverseY();
     }
 
     function forward(): void
@@ -51,5 +59,10 @@ class Positioning
     function position(): Position
     {
         return $this->position;
+    }
+
+    function lastObstacle(): Position
+    {
+        return $this->lastObstacle;
     }
 }

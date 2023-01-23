@@ -4,6 +4,7 @@ namespace MarsRover;
 
 class Vector extends GeoCoord
 {
+    /*
     static function fromDirection(string $direction, int $speed = 1): Vector
     {
         switch ($direction) {
@@ -22,23 +23,28 @@ class Vector extends GeoCoord
 
     function toDirection(): string | false
     {
-        if ($this->latitude() > 0 && $this->longitude() == 0) return 'N';
-        if ($this->latitude() < 0 && $this->longitude() == 0) return 'S';
-        if ($this->latitude() == 0 && $this->longitude() > 0) return 'E';
-        if ($this->latitude() == 0 && $this->longitude() < 0) return 'W';
+        $latitude = $this->latitude();
+        $longitude = $this->longitude();
+        if ($latitude > 0 && $longitude == 0) return 'N';
+        if ($latitude < 0 && $longitude == 0) return 'S';
+        if ($latitude == 0 && $longitude > 0) return 'E';
+        if ($latitude == 0 && $longitude < 0) return 'W';
         return false;
     }
+
 
     function inverse(): Vector
     {
         return new Vector(-$this->latitude(), -$this->longitude());
     }
+    */
 
     function inverseX(): Vector
     {
         return new Vector($this->latitude(), $this->longitude() + 180);
     }
 
+    /*
     function inverseY(): Vector
     {
         return new Vector(-$this->latitude(), $this->longitude());
@@ -53,6 +59,8 @@ class Vector extends GeoCoord
     {
         return new Vector($this->longitude(), -$this->latitude());
     }
+    */
+
 
     function add(Vector $vector): Vector
     {

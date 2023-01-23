@@ -6,7 +6,7 @@ class Rover extends Invoker
 {
     //private Positioning $positioning;
 
-    function __construct(int $latitude, int $longitude, string $direction)
+    function __construct(int $latitude, int $longitude, string $direction, Globe $globe = null)
     {
         // $this->positioning = new Positioning(
         //    new Position($latitude, $longitude),
@@ -14,7 +14,8 @@ class Rover extends Invoker
 
         parent::__construct(new Positioning(
             new Position($latitude, $longitude),
-            Vector::fromDirection($direction)));
+            Vector::fromDirection($direction),
+            $globe ?: Globe::default()));
     }
 
     function getPosition(): Position
@@ -25,6 +26,11 @@ class Rover extends Invoker
     function getDirection(): string
     {
         return $this->positioning->direction();
+    }
+
+    function getLastObstacle(): ?Position
+    {
+        return $this->positioning->lastObstacle();
     }
 
     /*
