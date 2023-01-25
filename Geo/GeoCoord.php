@@ -1,6 +1,6 @@
 <?php
 
-namespace MarsRover;
+namespace MarsRover\Geo;
 
 class GeoCoord
 {
@@ -31,7 +31,7 @@ class GeoCoord
 
     function hasCrossedPole(): bool
     {
-        $latitude = self::mod($this->latitude(), 360); // 0 to 359
+        $latitude = self::mod($this->latitude, 360); // 0 to 359
         return $latitude > 180;
     }
 

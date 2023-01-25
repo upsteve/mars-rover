@@ -1,6 +1,6 @@
 <?php
 
-namespace MarsRover;
+namespace MarsRover\Geo;
 
 class Position extends GeoCoord
 {

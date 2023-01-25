@@ -2,7 +2,9 @@
 
 namespace MarsRover;
 
-class Globe
+use MarsRover\Geo\Position;
+
+class Planet
 {
     private array $craterPositions;
 
@@ -22,6 +24,6 @@ class Globe
 
     static function default()
     {
-        return new Globe([]);
+        return new Planet([]);
     }
 }

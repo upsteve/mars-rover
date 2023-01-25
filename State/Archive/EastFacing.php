@@ -1,6 +1,9 @@
 <?php
 
-namespace MarsRover;
+namespace MarsRover\Archive;
+
+use MarsRover\Geo\Position;
+use MarsRover\Geo\Vector;
 
 class EastFacing extends State
 {
@@ -24,9 +27,9 @@ class EastFacing extends State
         $roverState->setState($this->move(new Vector(0, -1)));
     }
 
-    function inverse(Position $position): FacingInterface
+    function inverse(Position $position): StateInterface
     {
-        return new WestFacing($position);
+        throw new \DomainException("Only North/South directions should be inverted on crossing a pole");
     }
 
     function getDirection(): String

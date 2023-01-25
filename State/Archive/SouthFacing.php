@@ -1,6 +1,9 @@
 <?php
 
-namespace MarsRover;
+namespace MarsRover\Archive;
+
+use MarsRover\Geo\Position;
+use MarsRover\Geo\Vector;
 
 class SouthFacing extends State
 {
@@ -24,7 +27,7 @@ class SouthFacing extends State
         $roverState->setState($this->move(new Vector(1, 0)));
     }
 
-    function inverse(Position $position): FacingInterface
+    function inverse(Position $position): StateInterface
     {
         return new NorthFacing($position);
     }

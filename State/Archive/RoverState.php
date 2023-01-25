@@ -1,17 +1,22 @@
 <?php
 
-namespace MarsRover;
+namespace MarsRover\Archive;
 
 class RoverState
 {
-    private FacingInterface $state;
+    private StateInterface $state;
+
+    function __construct(StateInterface $state)
+    {
+        $this->setState($state);
+    }
 
     function getState()
     {
         return $this->state;
     }
 
-    function setState(FacingInterface $state)
+    function setState(StateInterface $state)
     {
         $this->state = $state;
     }

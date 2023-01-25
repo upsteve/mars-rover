@@ -2,55 +2,40 @@
 
 namespace MarsRover;
 
-class Rover extends Invoker
+use MarsRover\Command\CommandProcessor;
+use MarsRover\Command\CommandProcessorInterface;
+use MarsRover\Geo\Position;
+use MarsRover\State\StateInterface;
+
+class Rover
 {
-    //private Positioning $positioning;
+    private RoverController $roverController;
+    private CommandProcessor $commandProcessor;
 
-    function __construct(int $latitude, int $longitude, string $direction, Globe $globe = null)
+    function __construct(StateInterface $state, CommandProcessorInterface $commandProcessor = null)
     {
-        // $this->positioning = new Positioning(
-        //    new Position($latitude, $longitude),
-        //    Vector::fromDirection($direction));
+        $this->roverController = new RoverController($state);
+        $this->commandProcessor = $commandProcessor;
+        $this->commandProcessor->setController($this->roverController);
+    }
 
-        parent::__construct(new Positioning(
-            new Position($latitude, $longitude),
-            Vector::fromDirection($direction),
-            $globe ?: Globe::default()));
+    function executeCommands(string $commandCodes): bool
+    {
+        return $this->commandProcessor->execute($commandCodes);
     }
 
     function getPosition(): Position
     {
-        return $this->positioning->position();
+        return $this->roverController->getPosition();
     }
 
     function getDirection(): string
     {
-        return $this->positioning->direction();
+        return $this->roverController->getDirection();
     }
 
-    function getLastObstacle(): ?Position
+    function getObstacle(): ?Position
     {
-        return $this->positioning->lastObstacle();
+        return $this->roverController->getObstacle();
     }
-
-    /*
-    function command(string $command): void
-    {
-        if ($command == 'F') {
-            $this->positioning->forward();
-        }
-
-        if ($command == 'B') {
-            $this->positioning->backward();
-        }
-
-        if ($command == 'L') {
-            $this->positioning->rotateLeft();
-        }
-
-        if ($command == 'R') {
-            $this->positioning->rotateRight();
-        }
-    }
-    */
 }

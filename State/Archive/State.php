@@ -1,8 +1,11 @@
 <?php
 
-namespace MarsRover;
+namespace MarsRover\Archive;
 
-abstract class State implements FacingInterface
+use MarsRover\Geo\Position;
+use MarsRover\Geo\Vector;
+
+abstract class State implements StateInterface
 {
     protected Position $position;
 
